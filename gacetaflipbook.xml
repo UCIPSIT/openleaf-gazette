@@ -7,7 +7,7 @@
     <license>MIT License</license>
     <authorEmail>opensource@ucips.edu</authorEmail>
     <authorUrl>https://ucips.edu</authorUrl>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <description>
         Open-source Joomla content plugin for the UCIPS digital gazette.
         Shortcodes: {gacetaflip ...} and {openleaf ...}
@@ -83,7 +83,7 @@
                     name="auto_fullscreen"
                     type="radio"
                     label="Intentar fullscreen automaticamente"
-                    default="1"
+                    default="0"
                     class="btn-group btn-group-yesno"
                 >
                     <option value="1">Si</option>
@@ -99,7 +99,7 @@
                     name="show_download"
                     type="radio"
                     label="Mostrar boton descargar (native)"
-                    default="1"
+                    default="0"
                     class="btn-group btn-group-yesno"
                 >
                     <option value="1">Si</option>

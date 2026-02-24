@@ -39,7 +39,7 @@ Embed mode:
 Native mode:
 
 ```text
-{openleaf mode="native" file="images/pdfs/ucips-gazette-base3f-27012026-prueba.pdf" start="26" width="560" height="760" maxpages="0"}
+{openleaf mode="native" file="images/pdfs/ucips-gazette-base3f-27012026-prueba.pdf" start="1" maxpages="0" fit="screen" autofullscreen="0" download="0"}
 ```
 
 ## License

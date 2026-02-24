@@ -210,8 +210,8 @@ class PlgContentGacetaflipbook extends CMSPlugin
         );
 
         $showDownload = $this->normalizeBool(
-            (string) ($tagParams['download'] ?? $this->params->get('show_download', 1)),
-            true
+            (string) ($tagParams['download'] ?? $this->params->get('show_download', 0)),
+            false
         );
 
         $updateHash = $this->normalizeBool(
@@ -225,8 +225,8 @@ class PlgContentGacetaflipbook extends CMSPlugin
         }
 
         $autoFullscreen = $this->normalizeBool(
-            (string) ($tagParams['autofullscreen'] ?? $tagParams['startfullscreen'] ?? $this->params->get('auto_fullscreen', 1)),
-            true
+            (string) ($tagParams['autofullscreen'] ?? $tagParams['startfullscreen'] ?? $this->params->get('auto_fullscreen', 0)),
+            false
         );
 
         $bookId = 'gacetaflip-native-' . substr(sha1(uniqid((string) mt_rand(), true)), 0, 12);
