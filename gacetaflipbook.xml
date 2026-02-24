@@ -7,7 +7,7 @@
     <license>MIT License</license>
     <authorEmail>opensource@ucips.edu</authorEmail>
     <authorUrl>https://ucips.edu</authorUrl>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <description>
         Open-source Joomla content plugin for the UCIPS digital gazette.
         Shortcodes: {gacetaflip ...} and {openleaf ...}
@@ -70,6 +70,25 @@
                     label="Paso de zoom"
                     default="0.15"
                 />
+                <field
+                    name="default_fit_mode"
+                    type="list"
+                    label="Modo visual por defecto (native)"
+                    default="screen"
+                >
+                    <option value="screen">Screen (viewport completo)</option>
+                    <option value="normal">Normal</option>
+                </field>
+                <field
+                    name="auto_fullscreen"
+                    type="radio"
+                    label="Intentar fullscreen automaticamente"
+                    default="1"
+                    class="btn-group btn-group-yesno"
+                >
+                    <option value="1">Si</option>
+                    <option value="0">No</option>
+                </field>
                 <field
                     name="embed_ratio"
                     type="text"

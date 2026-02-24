@@ -2,6 +2,10 @@
   margin: 1.4rem 0;
 }
 
+.gacetaflip-shell-native.gacetaflip-fit-screen {
+  margin: 0;
+}
+
 .gacetaflip-error {
   border: 1px solid #f5c2c7;
   background: #f8d7da;
@@ -45,6 +49,17 @@
   display: flex;
   flex-direction: column;
   min-height: 420px;
+}
+
+.gacetaflip-shell-native.gacetaflip-fit-screen .gacetaflip-native {
+  min-height: 100vh;
+  border-radius: 0;
+  border-left: 0;
+  border-right: 0;
+}
+
+.gacetaflip-shell-native.gacetaflip-fit-screen .gacetaflip-card {
+  min-height: 100vh;
 }
 
 .gacetaflip-toolbar {
@@ -128,6 +143,11 @@
   overflow: auto;
 }
 
+.gacetaflip-shell-native.gacetaflip-fit-screen .gacetaflip-stage-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
 .gacetaflip-stage {
   --gacetaflip-zoom: 1;
   transform: scale(var(--gacetaflip-zoom));
@@ -190,5 +210,13 @@
 
   .gacetaflip-pageinput {
     flex: 1 1 auto;
+  }
+
+  .gacetaflip-shell-native.gacetaflip-fit-screen .gacetaflip-native {
+    min-height: 100dvh;
+  }
+
+  .gacetaflip-shell-native.gacetaflip-fit-screen .gacetaflip-card {
+    min-height: 100dvh;
   }
 }

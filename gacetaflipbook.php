@@ -219,9 +219,20 @@ class PlgContentGacetaflipbook extends CMSPlugin
             true
         );
 
-        $bookId = 'gacetaflip-native-' . substr(sha1(uniqid((string) mt_rand(), true)), 0, 12);
+        $fitMode = strtolower(trim((string) ($tagParams['fit'] ?? $this->params->get('default_fit_mode', 'screen'))));
+        if ($fitMode !== 'screen' && $fitMode !== 'normal') {
+            $fitMode = 'screen';
+        }
 
-        return '<div class="gacetaflip-shell gacetaflip-shell-native">'
+        $autoFullscreen = $this->normalizeBool(
+            (string) ($tagParams['autofullscreen'] ?? $tagParams['startfullscreen'] ?? $this->params->get('auto_fullscreen', 1)),
+            true
+        );
+
+        $bookId = 'gacetaflip-native-' . substr(sha1(uniqid((string) mt_rand(), true)), 0, 12);
+        $shellClass = $fitMode === 'screen' ? ' gacetaflip-fit-screen' : '';
+
+        return '<div class="gacetaflip-shell gacetaflip-shell-native' . $shellClass . '">'
             . '<div id="' . htmlspecialchars($bookId, ENT_QUOTES, 'UTF-8') . '"'
             . ' class="gacetaflip-native"'
             . ' data-gacetaflip="1"'
@@ -234,6 +245,8 @@ class PlgContentGacetaflipbook extends CMSPlugin
             . ' data-zoomstep="' . htmlspecialchars((string) $zoomStep, ENT_QUOTES, 'UTF-8') . '"'
             . ' data-download="' . ($showDownload ? '1' : '0') . '"'
             . ' data-updatehash="' . ($updateHash ? '1' : '0') . '"'
+            . ' data-fitmode="' . htmlspecialchars($fitMode, ENT_QUOTES, 'UTF-8') . '"'
+            . ' data-autofullscreen="' . ($autoFullscreen ? '1' : '0') . '"'
             . '></div>'
             . '</div>';
     }

@@ -83,6 +83,65 @@
     return safeZoom;
   }
 
+  function requestFullscreenSafe(target) {
+    if (!target) {
+      return Promise.resolve(false);
+    }
+
+    var fn = target.requestFullscreen
+      || target.webkitRequestFullscreen
+      || target.msRequestFullscreen;
+
+    if (!fn) {
+      return Promise.resolve(false);
+    }
+
+    try {
+      var result = fn.call(target);
+      if (result && typeof result.then === 'function') {
+        return result.then(function () {
+          return true;
+        }).catch(function () {
+          return false;
+        });
+      }
+      return Promise.resolve(true);
+    } catch (e) {
+      return Promise.resolve(false);
+    }
+  }
+
+  function exitFullscreenSafe() {
+    var fn = document.exitFullscreen
+      || document.webkitExitFullscreen
+      || document.msExitFullscreen;
+
+    if (!fn) {
+      return Promise.resolve(false);
+    }
+
+    try {
+      var result = fn.call(document);
+      if (result && typeof result.then === 'function') {
+        return result.then(function () {
+          return true;
+        }).catch(function () {
+          return false;
+        });
+      }
+      return Promise.resolve(true);
+    } catch (e) {
+      return Promise.resolve(false);
+    }
+  }
+
+  function getFullscreenElement() {
+    return document.fullscreenElement
+      || document.webkitFullscreenElement
+      || document.msFullscreenElement
+      || null;
+  }
+
   async function renderNative(root) {
     var pdfUrl = root.dataset.file || '';
     var width = toInt(root.dataset.width, 560);
@@ -93,6 +152,13 @@
     var zoomStep = Math.max(0.05, Math.min(0.6, toFloat(root.dataset.zoomstep, 0.15)));
     var showDownload = toBool(root.dataset.download, true);
     var updateHash = toBool(root.dataset.updatehash, true);
+    var fitMode = String(root.dataset.fitmode || 'screen').toLowerCase();
+    var autoFullscreen = toBool(root.dataset.autofullscreen, true);
+    var shell = root.closest('.gacetaflip-shell-native');
+
+    if (shell && fitMode === 'screen') {
+      shell.classList.add('gacetaflip-fit-screen');
+    }
 
     if (!pdfUrl) {
       setError(root, 'OpenLeaf Gazette: missing file parameter.');
@@ -223,7 +289,7 @@
       }
 
       if (!hiddenPages.children.length) {
-        setError(root, 'GacetaFlip: no hay paginas para mostrar.');
+        setError(root, 'OpenLeaf Gazette: no pages found to render.');
         return;
       }
 
@@ -305,15 +371,24 @@
         currentZoom = applyZoom(stage, zoomLabel, 1);
       });
 
+      function syncFullscreenButton() {
+        fullBtn.textContent = getFullscreenElement() === card
+          ? 'Salir pantalla completa'
+          : 'Pantalla completa';
+      }
+
+      syncFullscreenButton();
+      document.addEventListener('fullscreenchange', syncFullscreenButton);
+      document.addEventListener('webkitfullscreenchange', syncFullscreenButton);
+      document.addEventListener('MSFullscreenChange', syncFullscreenButton);
+
       fullBtn.addEventListener('click', function () {
-        var target = card;
-        if (!document.fullscreenElement) {
-          if (target.requestFullscreen) {
-            target.requestFullscreen();
-          }
-        } else if (document.exitFullscreen) {
-          document.exitFullscreen();
+        if (getFullscreenElement() === card) {
+          exitFullscreenSafe().then(syncFullscreenButton);
+          return;
         }
+
+        requestFullscreenSafe(card).then(syncFullscreenButton);
       });
 
       var statusText = renderCount < totalPages
@@ -322,6 +397,25 @@
 
       setStatus(status, statusText);
       root.classList.remove('is-loading');
+
+      if (autoFullscreen && fitMode === 'screen') {
+        setTimeout(function () {
+          requestFullscreenSafe(card).then(function (ok) {
+            if (ok) {
+              syncFullscreenButton();
+              return;
+            }
+
+            var tryOnGesture = function () {
+              requestFullscreenSafe(card).then(syncFullscreenButton);
+            };
+
+            document.addEventListener('click', tryOnGesture, { once: true, capture: true });
+            document.addEventListener('keydown', tryOnGesture, { once: true, capture: true });
+            document.addEventListener('touchstart', tryOnGesture, { once: true, capture: true });
+          });
+        }, 120);
+      }
     } catch (error) {
       console.error('OpenLeaf Gazette error:', error);
       setError(root, 'OpenLeaf Gazette: unable to load the PDF. Check file path and permissions.');
