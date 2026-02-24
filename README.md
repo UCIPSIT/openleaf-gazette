@@ -1,28 +1,36 @@
-# Joomla Content Plugin: Gaceta Flipbook
+# OpenLeaf Gazette
 
-Plugin de contenido para Joomla 5 que permite mostrar una gaceta en formato flipbook.
+Open-source Joomla 5 content plugin for the UCIPS digital gazette.
 
-## Modos
+## Features
 
-- `embed`: incrusta una URL externa (ideal para apariencia casi exacta de FlipHTML5).
-- `native`: renderiza un PDF local/remoto con `pdf.js + StPageFlip`.
+- `embed` mode: uses external flipbook URLs (closest match to FlipHTML5 style).
+- `native` mode: self-hosted PDF flipbook rendering with `pdf.js + StPageFlip`.
+- Shortcodes supported:
+  - `{gacetaflip ...}`
+  - `{gacetaflipbook ...}`
+  - `{openleaf ...}`
 
-## Instalacion
+## Installation
 
-1. Ir a `System -> Install -> Extensions` en Joomla Administrator.
-2. Subir el zip del plugin.
-3. Activar `Content - Gaceta Flipbook`.
+1. Joomla Administrator -> `System -> Install -> Extensions`.
+2. Upload the plugin zip.
+3. Enable `Content - OpenLeaf Gazette`.
 
-## Uso en articulo
+## Usage
 
-Embed:
-
-```text
-{gacetaflip mode="embed" url="https://online.fliphtml5.com/HmoralesZ/HCJ-gaceta-piloto-01/#p=26"}
-```
-
-Native:
+Embed mode:
 
 ```text
-{gacetaflip mode="native" file="images/pdfs/gaceta.pdf" start="26" width="560" height="760" maxpages="0"}
+{openleaf mode="embed" url="https://online.fliphtml5.com/HmoralesZ/HCJ-gaceta-piloto-01/#p=26"}
 ```
+
+Native mode:
+
+```text
+{openleaf mode="native" file="images/pdfs/ucips-gazette-base3f-27012026-prueba.pdf" start="26" width="560" height="760" maxpages="0"}
+```
+
+## License
+
+MIT

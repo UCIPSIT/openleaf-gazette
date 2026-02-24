@@ -15,13 +15,9 @@ class PlgContentGacetaflipbook extends CMSPlugin
     private static $assetsLoaded = false;
 
     /**
-     * Replace {gacetaflip ...} tags.
+     * Replace shortcode tags.
      *
-     * Embed mode (closest to FlipHTML5 look):
-     * {gacetaflip mode="embed" url="https://online.fliphtml5.com/.../#p=26"}
-     *
-     * Native mode (self-hosted PDF rendering):
-     * {gacetaflip mode="native" file="images/pdfs/gaceta.pdf" start=26}
+     * Supported tags: {gacetaflip ...}, {gacetaflipbook ...}, {openleaf ...}
      */
     public function onContentPrepare($context, &$article, &$params, $page = 0)
     {
@@ -33,11 +29,13 @@ class PlgContentGacetaflipbook extends CMSPlugin
             return true;
         }
 
-        if (stripos($article->text, '{gacetaflip') === false && stripos($article->text, '{gacetaflipbook') === false) {
+        if (stripos($article->text, '{gacetaflip') === false
+            && stripos($article->text, '{gacetaflipbook') === false
+            && stripos($article->text, '{openleaf') === false) {
             return true;
         }
 
-        $regex = '/{\s*(gacetaflip|gacetaflipbook)\s+([^}]*)}/i';
+        $regex = '/{\s*(gacetaflip|gacetaflipbook|openleaf)\s+([^}]*)}/i';
 
         if (!preg_match_all($regex, $article->text, $matches, PREG_SET_ORDER)) {
             return true;
@@ -101,12 +99,12 @@ class PlgContentGacetaflipbook extends CMSPlugin
         $url = trim((string) ($tagParams['url'] ?? $tagParams['src'] ?? ''));
 
         if ($url === '') {
-            return '<p class="gacetaflip-error">GacetaFlip: falta el parametro <code>url</code> en modo <code>embed</code>.</p>';
+            return '<p class="gacetaflip-error">OpenLeaf Gazette: missing <code>url</code> in <code>embed</code> mode.</p>';
         }
 
         $safeUrl = $this->normalizeEmbedUrl($url);
         if ($safeUrl === '') {
-            return '<p class="gacetaflip-error">GacetaFlip: la URL de <code>embed</code> no es valida.</p>';
+            return '<p class="gacetaflip-error">OpenLeaf Gazette: invalid <code>embed</code> URL.</p>';
         }
 
         $start = $this->normalizeInt(
@@ -161,12 +159,12 @@ class PlgContentGacetaflipbook extends CMSPlugin
         $file = trim((string) ($tagParams['file'] ?? $tagParams['pdf'] ?? ''));
 
         if ($file === '') {
-            return '<p class="gacetaflip-error">GacetaFlip: falta el parametro <code>file</code> en modo <code>native</code>.</p>';
+            return '<p class="gacetaflip-error">OpenLeaf Gazette: missing <code>file</code> in <code>native</code> mode.</p>';
         }
 
         $fileUrl = $this->normalizeFileUrl($file);
         if ($fileUrl === '') {
-            return '<p class="gacetaflip-error">GacetaFlip: ruta de PDF invalida.</p>';
+            return '<p class="gacetaflip-error">OpenLeaf Gazette: invalid PDF path.</p>';
         }
 
         $width = $this->normalizeInt(

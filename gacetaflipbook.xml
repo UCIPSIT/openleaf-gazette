@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="5.0" type="plugin" group="content" method="upgrade">
-    <name>Content - Gaceta Flipbook</name>
-    <author>Codex Assistant</author>
+    <name>Content - OpenLeaf Gazette</name>
+    <author>UCIPS Open Source Community</author>
     <creationDate>2026-02-24</creationDate>
     <copyright>(C) 2026</copyright>
-    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-    <authorEmail>admin@example.com</authorEmail>
-    <authorUrl>https://localhost</authorUrl>
-    <version>1.0.0</version>
+    <license>MIT License</license>
+    <authorEmail>opensource@ucips.edu</authorEmail>
+    <authorUrl>https://ucips.edu</authorUrl>
+    <version>1.1.0</version>
     <description>
-        Plugin de contenido para flipbook de gaceta.
-        Shortcode: {gacetaflip mode="embed|native" ...}
-        Embed: usa una URL externa (ejemplo FlipHTML5).
-        Native: renderiza PDF local/remoto con efecto flipbook.
+        Open-source Joomla content plugin for the UCIPS digital gazette.
+        Shortcodes: {gacetaflip ...} and {openleaf ...}
+        Modes: embed (external viewer URL) and native (self-hosted PDF flipbook).
     </description>
 
     <files>
         <filename plugin="gacetaflipbook">gacetaflipbook.php</filename>
         <filename>gacetaflipbook.xml</filename>
+        <filename>LICENSE</filename>
         <filename>index.html</filename>
         <folder>assets</folder>
     </files>

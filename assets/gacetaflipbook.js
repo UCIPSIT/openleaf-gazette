@@ -95,17 +95,17 @@
     var updateHash = toBool(root.dataset.updatehash, true);
 
     if (!pdfUrl) {
-      setError(root, 'GacetaFlip: falta el parametro file.');
+      setError(root, 'OpenLeaf Gazette: missing file parameter.');
       return;
     }
 
     if (!window.pdfjsLib) {
-      setError(root, 'GacetaFlip: no se pudo cargar pdf.js.');
+      setError(root, 'OpenLeaf Gazette: unable to load pdf.js.');
       return;
     }
 
     if (!window.St || !window.St.PageFlip) {
-      setError(root, 'GacetaFlip: no se pudo cargar StPageFlip.');
+      setError(root, 'OpenLeaf Gazette: unable to load StPageFlip.');
       return;
     }
 
@@ -323,8 +323,8 @@
       setStatus(status, statusText);
       root.classList.remove('is-loading');
     } catch (error) {
-      console.error('GacetaFlip error:', error);
-      setError(root, 'GacetaFlip: no se pudo cargar el PDF. Verifica ruta y permisos.');
+      console.error('OpenLeaf Gazette error:', error);
+      setError(root, 'OpenLeaf Gazette: unable to load the PDF. Check file path and permissions.');
     }
   }
 
