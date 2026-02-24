@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="5.0" type="plugin" group="content" method="upgrade">
+    <name>Content - Gaceta Flipbook</name>
+    <author>Codex Assistant</author>
+    <creationDate>2026-02-24</creationDate>
+    <copyright>(C) 2026</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>admin@example.com</authorEmail>
+    <authorUrl>https://localhost</authorUrl>
+    <version>1.0.0</version>
+    <description>
+        Plugin de contenido para flipbook de gaceta.
+        Shortcode: {gacetaflip mode="embed|native" ...}
+        Embed: usa una URL externa (ejemplo FlipHTML5).
+        Native: renderiza PDF local/remoto con efecto flipbook.
+    </description>
+
+    <files>
+        <filename plugin="gacetaflipbook">gacetaflipbook.php</filename>
+        <filename>gacetaflipbook.xml</filename>
+        <filename>index.html</filename>
+        <folder>assets</folder>
+    </files>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic" label="Configuracion Basica">
+                <field
+                    name="default_mode"
+                    type="list"
+                    label="Modo por defecto"
+                    default="native"
+                >
+                    <option value="native">Native (PDF autohospedado)</option>
+                    <option value="embed">Embed (URL externa)</option>
+                </field>
+                <field
+                    name="default_width"
+                    type="number"
+                    label="Ancho por defecto (native)"
+                    default="560"
+                />
+                <field
+                    name="default_height"
+                    type="number"
+                    label="Alto por defecto (native)"
+                    default="760"
+                />
+                <field
+                    name="default_start_page"
+                    type="number"
+                    label="Pagina inicial por defecto"
+                    default="1"
+                />
+                <field
+                    name="max_pages"
+                    type="number"
+                    label="Max paginas a renderizar (0 = todas)"
+                    default="0"
+                />
+                <field
+                    name="render_scale"
+                    type="text"
+                    label="Escala de render PDF (calidad)"
+                    default="1.35"
+                />
+                <field
+                    name="zoom_step"
+                    type="text"
+                    label="Paso de zoom"
+                    default="0.15"
+                />
+                <field
+                    name="embed_ratio"
+                    type="text"
+                    label="Aspect ratio embed (porcentaje)"
+                    default="75"
+                />
+                <field
+                    name="show_download"
+                    type="radio"
+                    label="Mostrar boton descargar (native)"
+                    default="1"
+                    class="btn-group btn-group-yesno"
+                >
+                    <option value="1">Si</option>
+                    <option value="0">No</option>
+                </field>
+                <field
+                    name="update_hash"
+                    type="radio"
+                    label="Actualizar hash #p= (native)"
+                    default="1"
+                    class="btn-group btn-group-yesno"
+                >
+                    <option value="1">Si</option>
+                    <option value="0">No</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>
