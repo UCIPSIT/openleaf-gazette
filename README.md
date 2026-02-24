@@ -17,6 +17,17 @@ Open-source Joomla 5 content plugin for the UCIPS digital gazette.
 2. Upload the plugin zip.
 3. Enable `Content - OpenLeaf Gazette`.
 
+## CI/CD ZIP publishing
+
+- GitHub Actions workflow: `.github/workflows/cicd.yml`
+- On every push/PR, CI builds the Joomla installable ZIP and uploads it as an artifact.
+- On tags like `v1.1.0`, CD also uploads the ZIP file to the GitHub Release.
+- Local build command:
+
+```bash
+./scripts/build-zip.sh
+```
+
 ## Usage
 
 Embed mode:
