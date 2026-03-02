@@ -56,6 +56,7 @@ git push origin vX.Y.Z
 
 Detailed Spanish guide:
 - `docs/RELEASE_ES.md`
+- `docs/ORGANIZACION_INDICE_ES.md`
 
 ## Usage
 
@@ -152,6 +153,52 @@ Resolution precedence in native mode:
 4. `catid:ID` or `category:ID` in map
 5. `context:com_xxx...`, then `default` / `*` in map
 6. `PDF por defecto (desde Admin)`
+
+### Option B.1: organize Gazette/Revista index by volumes (vol-01, vol-02, ...)
+
+Recommended structure in Media Manager:
+
+```text
+images/pdfs/gaceta/2026/vol-01.pdf
+images/pdfs/gaceta/2026/vol-02.pdf
+images/pdfs/revista/2026/vol-01.pdf
+images/pdfs/revista/2026/vol-02.pdf
+```
+
+Recommended `section_pdf_map` template:
+
+```text
+# Gazette
+gaceta-2026-vol-01=images/pdfs/gaceta/2026/vol-01.pdf
+gaceta-2026-vol-02=images/pdfs/gaceta/2026/vol-02.pdf
+
+# Revista
+revista-2026-vol-01=images/pdfs/revista/2026/vol-01.pdf
+revista-2026-vol-02=images/pdfs/revista/2026/vol-02.pdf
+```
+
+Create one index page (for links) and one page per volume (for rendering):
+
+`Gazette index` page content:
+
+```text
+- Vol. 01: /gaceta/2026/vol-01
+- Vol. 02: /gaceta/2026/vol-02
+```
+
+`Gazette vol-01` page content:
+
+```text
+{openleaf section="gaceta-2026-vol-01"}
+```
+
+`Revista vol-01` page content:
+
+```text
+{openleaf section="revista-2026-vol-01"}
+```
+
+This pattern scales well, keeps each page light, and avoids loading many large PDFs in a single page view.
 
 ### Option C: shortcode with explicit params
 

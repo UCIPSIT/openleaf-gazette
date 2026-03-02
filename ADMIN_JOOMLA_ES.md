@@ -124,7 +124,46 @@ Flujo recomendado por rol no-admin:
 
 Con esto, el plugin no requiere que el usuario sea administrador para publicar una gaceta con PDF propio.
 
-## 8) Distribucion y release
+## 8) Organizacion recomendada para indice de Gaceta/Revista (vol-01, vol-02, ...)
+
+Estructura sugerida de archivos en Media Manager:
+
+```text
+images/pdfs/gaceta/2026/vol-01.pdf
+images/pdfs/gaceta/2026/vol-02.pdf
+images/pdfs/revista/2026/vol-01.pdf
+images/pdfs/revista/2026/vol-02.pdf
+```
+
+Plantilla sugerida para `Mapeo PDF por seccion (opcional)`:
+
+```text
+# Gaceta
+gaceta-2026-vol-01=images/pdfs/gaceta/2026/vol-01.pdf
+gaceta-2026-vol-02=images/pdfs/gaceta/2026/vol-02.pdf
+
+# Revista
+revista-2026-vol-01=images/pdfs/revista/2026/vol-01.pdf
+revista-2026-vol-02=images/pdfs/revista/2026/vol-02.pdf
+```
+
+Modelo recomendado de contenido:
+
+1. Pagina indice (solo listado de enlaces).
+2. Una pagina por volumen (render del PDF).
+
+Ejemplo pagina de volumen:
+
+```text
+{openleaf section="gaceta-2026-vol-01"}
+```
+
+Ventaja: escalable, facil de mantener y evita cargar muchos PDFs pesados en una sola pagina.
+
+Guia extendida:
+- `docs/ORGANIZACION_INDICE_ES.md`
+
+## 9) Distribucion y release
 
 Flujo recomendado para distribuir una nueva version:
 
@@ -147,7 +186,7 @@ git push origin vX.Y.Z
 - Job `Build Joomla Plugin ZIP` en verde.
 - Release creada con el ZIP adjunto.
 
-## 9) Capturas de referencia
+## 10) Capturas de referencia
 
 ![Dashboard Joomla Admin](docs/screenshots/01-admin-dashboard.png)
 ![Listado de plugins OpenLeaf](docs/screenshots/02-plugin-list-openleaf.png)
