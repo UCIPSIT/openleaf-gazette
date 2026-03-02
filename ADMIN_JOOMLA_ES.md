@@ -99,7 +99,32 @@ Prioridad de resolucion (modo native):
 {openleaf mode="native" file="images/pdfs/ucips-gazette-base3f-27012026-prueba.pdf" fit="screen" autofullscreen="0" download="1"}
 ```
 
-## 7) Distribucion y release
+## 7) Permitir subida de PDF por roles no-admin (ACL)
+
+Si deseas que `Editor`, `Publisher` u otros roles suban PDFs (sin depender del admin), configuralo en permisos de Joomla:
+
+1. Ve a `Content -> Media`.
+2. Entra a `Options -> Permissions`.
+3. Selecciona el grupo objetivo (ejemplo: `Editor` o `Publisher`).
+4. Define como minimo:
+   - `Create = Allowed` (necesario para subir PDF)
+   - `Edit Own = Allowed` (recomendado para gestionar sus propios archivos)
+5. Guarda.
+
+Flujo recomendado por rol no-admin:
+
+1. Subir PDF en Media Manager, por ejemplo en `images/pdfs/`.
+2. En su articulo/modulo agregar:
+
+```text
+{openleaf mode="native" file="images/pdfs/mi-gaceta.pdf"}
+```
+
+3. Guardar y publicar.
+
+Con esto, el plugin no requiere que el usuario sea administrador para publicar una gaceta con PDF propio.
+
+## 8) Distribucion y release
 
 Flujo recomendado para distribuir una nueva version:
 
@@ -122,7 +147,7 @@ git push origin vX.Y.Z
 - Job `Build Joomla Plugin ZIP` en verde.
 - Release creada con el ZIP adjunto.
 
-## 8) Capturas de referencia
+## 9) Capturas de referencia
 
 ![Dashboard Joomla Admin](docs/screenshots/01-admin-dashboard.png)
 ![Listado de plugins OpenLeaf](docs/screenshots/02-plugin-list-openleaf.png)

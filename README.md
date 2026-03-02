@@ -77,6 +77,30 @@ Detailed Spanish guide:
 {openleaf}
 ```
 
+### Option A.1: allow non-admin roles to upload PDFs (ACL workflow)
+
+You do not need code changes for this. Configure Joomla ACL so non-admin users can upload files in Media Manager and reference them in `{openleaf}`:
+
+1. Go to `Content -> Media`.
+2. Open `Options -> Permissions`.
+3. Select the target group (for example `Editor` or `Publisher`).
+4. Set at least:
+   - `Create = Allowed` (required to upload PDF files)
+   - `Edit Own = Allowed` (recommended for self-managed files)
+5. Save.
+6. Ensure those users can edit article/module content where `{openleaf ...}` is used.
+
+Recommended non-admin publishing flow:
+
+1. User uploads PDF to `images/pdfs/` in Media Manager.
+2. User adds in content:
+
+```text
+{openleaf mode="native" file="images/pdfs/mi-gaceta.pdf"}
+```
+
+3. Plugin renders the assigned file without requiring plugin admin access.
+
 ### Option B: multiple PDFs from plugin settings (no hardcoded file per article)
 
 Configure `Mapeo PDF por seccion (opcional)` in plugin settings.
