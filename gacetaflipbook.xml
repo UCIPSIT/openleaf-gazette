@@ -7,7 +7,7 @@
     <license>MIT License</license>
     <authorEmail>opensource@ucips.edu</authorEmail>
     <authorUrl>https://ucips.edu</authorUrl>
-    <version>1.3.1</version>
+    <version>1.3.2</version>
     <description>
         Open-source Joomla content plugin for the UCIPS digital gazette.
         Shortcodes: {gacetaflip ...}, {openleaf ...}, and {openleaf}
@@ -41,6 +41,7 @@
                     label="PDF por defecto (desde Admin)"
                     description="Selecciona un PDF desde Media Manager para usar {openleaf} sin parametros."
                     directory="images"
+                    types="documents"
                 />
                 <field
                     name="section_pdf_map"

@@ -124,6 +124,12 @@ Flujo recomendado por rol no-admin:
 
 Con esto, el plugin no requiere que el usuario sea administrador para publicar una gaceta con PDF propio.
 
+Si el PDF no aparece al seleccionar `PDF por defecto (desde Admin)`:
+
+1. Verifica usar version del plugin `>= 1.3.2` (selector ajustado a documentos).
+2. Revisa `System -> Global Configuration -> Media` y confirma que `doc_extensions` incluya `pdf`.
+3. Confirma permisos ACL del grupo para crear/subir archivos en Media Manager.
+
 ## 8) Organizacion recomendada para indice de Gaceta/Revista (vol-01, vol-02, ...)
 
 Estructura sugerida de archivos en Media Manager:

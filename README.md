@@ -102,6 +102,12 @@ Recommended non-admin publishing flow:
 
 3. Plugin renders the assigned file without requiring plugin admin access.
 
+Troubleshooting (PDF not visible in plugin selector):
+
+1. Use plugin version `>= 1.3.2` (the `default_pdf_file` selector is set to `types="documents"`).
+2. In `System -> Global Configuration -> Media`, ensure `doc_extensions` includes `pdf`.
+3. Confirm user/group ACL can create files in Media Manager.
+
 ### Option B: multiple PDFs from plugin settings (no hardcoded file per article)
 
 Configure `Mapeo PDF por seccion (opcional)` in plugin settings.
