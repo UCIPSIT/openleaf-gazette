@@ -74,6 +74,74 @@
     statusEl.textContent = message;
   }
 
+  function setViewerCounter(metaValueEl, pageNumber, totalPages) {
+    if (!metaValueEl) {
+      return;
+    }
+
+    metaValueEl.textContent = pageNumber + ' / ' + totalPages;
+  }
+
+  function decorateArticle(root) {
+    var article = root.closest('.com-content-article, .item-page, article');
+    var info;
+    var term;
+    var metaNodes;
+    var visibleMeta;
+
+    if (!article) {
+      return;
+    }
+
+    article.classList.add('gacetaflip-host-article');
+
+    info = article.querySelector('.article-info');
+    if (!info) {
+      return;
+    }
+
+    metaNodes = info.querySelectorAll('.createdby, .category-name');
+    metaNodes.forEach(function (node) {
+      node.classList.add('gacetaflip-hidden-meta');
+      node.setAttribute('aria-hidden', 'true');
+    });
+
+    visibleMeta = Array.prototype.slice.call(info.querySelectorAll('dd')).some(function (node) {
+      return !node.classList.contains('gacetaflip-hidden-meta');
+    });
+
+    term = info.querySelector('.article-info-term');
+    if (term && !visibleMeta) {
+      term.classList.add('gacetaflip-hidden-meta');
+      info.classList.add('gacetaflip-hidden-meta');
+    }
+  }
+
+  function lockStageScroll(stageWrapEl) {
+    if (!stageWrapEl) {
+      return;
+    }
+
+    stageWrapEl.style.overflow = 'hidden';
+    stageWrapEl.style.overflowX = 'hidden';
+    stageWrapEl.style.overflowY = 'hidden';
+    stageWrapEl.style.overscrollBehavior = 'none';
+
+    var resetScroll = function () {
+      if (stageWrapEl.scrollTop !== 0) {
+        stageWrapEl.scrollTop = 0;
+      }
+      if (stageWrapEl.scrollLeft !== 0) {
+        stageWrapEl.scrollLeft = 0;
+      }
+    };
+
+    resetScroll();
+    stageWrapEl.addEventListener('scroll', resetScroll, { passive: true });
+    window.requestAnimationFrame(resetScroll);
+    window.setTimeout(resetScroll, 120);
+  }
+
   function applyZoom(stageEl, zoomLabelEl, zoomValue) {
     var safeZoom = Math.max(0.6, Math.min(2.2, zoomValue));
     stageEl.style.setProperty('--gacetaflip-zoom', String(safeZoom));
@@ -156,6 +224,8 @@
     var autoFullscreen = toBool(root.dataset.autofullscreen, true);
     var shell = root.closest('.gacetaflip-shell-native');
 
+    decorateArticle(root);
+
     if (shell && fitMode === 'screen') {
       shell.classList.add('gacetaflip-fit-screen');
     }
@@ -184,12 +254,16 @@
     var toolbar = createEl('div', 'gacetaflip-toolbar');
     var stageWrap = createEl('div', 'gacetaflip-stage-wrap');
     var stage = createEl('div', 'gacetaflip-stage');
+    var footer = createEl('div', 'gacetaflip-footer');
     var status = createEl('div', 'gacetaflip-status', 'Cargando PDF...');
     var hiddenPages = createEl('div', 'gacetaflip-pages');
+
+    lockStageScroll(stageWrap);
 
     stageWrap.appendChild(stage);
     card.appendChild(toolbar);
     card.appendChild(stageWrap);
+    card.appendChild(footer);
     card.appendChild(status);
     card.appendChild(hiddenPages);
     root.appendChild(card);
@@ -200,6 +274,9 @@
     var prevBtn = createEl('button', 'gacetaflip-btn', 'Anterior');
     var nextBtn = createEl('button', 'gacetaflip-btn', 'Siguiente');
     var counter = createEl('span', 'gacetaflip-counter', '0 / 0');
+    var viewerMeta = createEl('div', 'gacetaflip-viewer-meta');
+    var viewerMetaLabel = createEl('span', 'gacetaflip-viewer-meta-label', 'Numeracion del visor OpenLeaf');
+    var viewerMetaValue = createEl('span', 'gacetaflip-viewer-meta-value', '0 / 0');
 
     var gotoLabel = createEl('label', 'gacetaflip-pagejump');
     gotoLabel.innerHTML = 'Ir a:';
@@ -216,6 +293,8 @@
     var zoomLabel = createEl('span', 'gacetaflip-zoomlabel', '100%');
 
     var fullBtn = createEl('button', 'gacetaflip-btn', 'Pantalla completa');
+    var downloadBar = createEl('div', 'gacetaflip-downloadbar');
+    var downloadNote = createEl('p', 'gacetaflip-downloadnote', 'Descarga el archivo PDF original en su resolucion completa.');
 
     leftTools.appendChild(prevBtn);
     leftTools.appendChild(counter);
@@ -229,16 +308,22 @@
     rightTools.appendChild(zoomResetBtn);
     rightTools.appendChild(fullBtn);
 
+    toolbar.appendChild(leftTools);
+    toolbar.appendChild(rightTools);
+    viewerMeta.appendChild(viewerMetaLabel);
+    viewerMeta.appendChild(viewerMetaValue);
+    footer.appendChild(viewerMeta);
+
     if (showDownload) {
-      var downloadLink = createEl('a', 'gacetaflip-btn gacetaflip-btn-link', 'Descargar PDF');
+      var downloadLink = createEl('a', 'gacetaflip-btn gacetaflip-btn-link gacetaflip-btn-download', 'Descargar PDF original');
       downloadLink.href = pdfUrl;
       downloadLink.target = '_blank';
       downloadLink.rel = 'noopener noreferrer';
-      rightTools.appendChild(downloadLink);
+      downloadLink.setAttribute('download', '');
+      downloadBar.appendChild(downloadNote);
+      downloadBar.appendChild(downloadLink);
+      footer.appendChild(downloadBar);
     }
-
-    toolbar.appendChild(leftTools);
-    toolbar.appendChild(rightTools);
 
     var currentZoom = 1;
     currentZoom = applyZoom(stage, zoomLabel, currentZoom);
@@ -281,10 +366,7 @@
         image.src = canvas.toDataURL('image/jpeg', 0.92);
         image.alt = 'Pagina ' + i;
 
-        var number = createEl('div', 'gacetaflip-pagenum', String(i));
-
         pageEl.appendChild(image);
-        pageEl.appendChild(number);
         hiddenPages.appendChild(pageEl);
       }
 
@@ -320,10 +402,13 @@
         pageFlip.loadFromHtml(pages);
       }
 
+      lockStageScroll(stageWrap);
+
       function syncUi(pageIdx) {
         var safeIdx = Math.max(0, Math.min(renderCount - 1, pageIdx));
         var pageNum = safeIdx + 1;
         counter.textContent = pageNum + ' / ' + renderCount;
+        setViewerCounter(viewerMetaValue, pageNum, renderCount);
         gotoInput.value = String(pageNum);
         prevBtn.disabled = pageNum <= 1;
         nextBtn.disabled = pageNum >= renderCount;
@@ -331,6 +416,8 @@
         if (updateHash) {
           setHashPage(pageNum);
         }
+
+        lockStageScroll(stageWrap);
       }
 
       syncUi(pageFlip.getCurrentPageIndex());

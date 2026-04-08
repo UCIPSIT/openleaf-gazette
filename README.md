@@ -6,6 +6,8 @@ Open-source Joomla 5 content plugin for the UCIPS digital gazette.
 
 - `embed` mode: uses external flipbook URLs (closest match to FlipHTML5 style).
 - `native` mode: self-hosted PDF flipbook rendering with `pdf.js + StPageFlip`.
+- Native viewer page numbers are rendered by the plugin UI, not over the PDF artwork.
+- Native viewer includes a bottom button to download the original PDF file in full resolution.
 - Admin-first workflow: choose a default PDF in plugin settings and render with `{openleaf}`.
 - Multiple PDFs from plugin settings with section-aware mapping (`section`, `Itemid`, or `catid`).
 - Shortcodes supported:

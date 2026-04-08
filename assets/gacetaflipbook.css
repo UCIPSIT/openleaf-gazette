@@ -39,6 +39,8 @@
   border: 1px solid #d9e1ec;
   border-radius: 16px;
   overflow: hidden;
+  position: relative;
+  isolation: isolate;
   background:
     radial-gradient(circle at top right, #e8f1ff 0%, rgba(232, 241, 255, 0) 42%),
     radial-gradient(circle at left 30%, #fff5e6 0%, rgba(255, 245, 230, 0) 35%),
@@ -113,6 +115,10 @@
   background: #334155;
 }
 
+.gacetaflip-btn-download {
+  min-width: 220px;
+}
+
 .gacetaflip-counter,
 .gacetaflip-zoomlabel {
   min-width: 74px;
@@ -140,7 +146,10 @@
 
 .gacetaflip-stage-wrap {
   padding: 14px;
-  overflow: auto;
+  overflow: hidden !important;
+  overscroll-behavior: none;
+  position: relative;
+  isolation: isolate;
 }
 
 .gacetaflip-shell-native.gacetaflip-fit-screen .gacetaflip-stage-wrap {
@@ -153,10 +162,71 @@
   transform: scale(var(--gacetaflip-zoom));
   transform-origin: top center;
   transition: transform 130ms ease;
+  overflow: hidden !important;
+  position: relative;
+}
+
+.gacetaflip-stage.stf__parent,
+.gacetaflip-stage .stf__wrapper,
+.gacetaflip-stage .stf__block {
+  overflow: hidden !important;
 }
 
 .gacetaflip-pages {
   display: none;
+}
+
+.gacetaflip-hidden-meta {
+  display: none !important;
+}
+
+.gacetaflip-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-top: 1px solid #d8e2ef;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.gacetaflip-viewer-meta {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #eef4ff;
+  border: 1px solid #c9d9f3;
+}
+
+.gacetaflip-viewer-meta-label {
+  color: #355070;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.gacetaflip-viewer-meta-value {
+  color: #0f172a;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.gacetaflip-downloadbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.gacetaflip-downloadnote {
+  margin: 0;
+  color: #334155;
+  font-size: 0.84rem;
 }
 
 .gacetaflip-page {
@@ -170,17 +240,6 @@
   height: auto;
   user-select: none;
   -webkit-user-drag: none;
-}
-
-.gacetaflip-pagenum {
-  position: absolute;
-  right: 10px;
-  bottom: 8px;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: rgba(17, 24, 39, 0.72);
-  color: #fff;
-  font-size: 0.74rem;
 }
 
 .gacetaflip-status {
@@ -210,6 +269,16 @@
 
   .gacetaflip-pageinput {
     flex: 1 1 auto;
+  }
+
+  .gacetaflip-footer,
+  .gacetaflip-downloadbar {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .gacetaflip-btn-download {
+    width: 100%;
   }
 
   .gacetaflip-shell-native.gacetaflip-fit-screen .gacetaflip-native {

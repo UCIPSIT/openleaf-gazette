@@ -24,6 +24,10 @@ Con esto, el shortcode minimo funciona sin poner ruta del PDF:
 {openleaf}
 ```
 
+Comportamiento visual actual del visor nativo:
+- La numeracion visible pertenece al visor OpenLeaf y se muestra fuera del PDF.
+- El boton inferior descarga el PDF original en su resolucion completa.
+
 ## 3) Administrar varios PDFs desde configuracion del plugin
 
 Usa el campo `Mapeo PDF por seccion (opcional)` para cargar multiples PDFs desde una sola configuracion.

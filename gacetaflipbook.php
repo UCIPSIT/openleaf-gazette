@@ -387,8 +387,12 @@ class PlgContentGacetaflipbook extends CMSPlugin
     {
         $rootPath = rtrim(Uri::root(true), '/');
         $assetBase = ($rootPath === '' ? '' : $rootPath) . '/plugins/content/gacetaflipbook/assets';
-        $cssUrl = $assetBase . '/gacetaflipbook.css';
-        $jsUrl = $assetBase . '/gacetaflipbook.js';
+        $cssPath = __DIR__ . '/assets/gacetaflipbook.css';
+        $jsPath = __DIR__ . '/assets/gacetaflipbook.js';
+        $assetVersion = (string) max((int) @filemtime($cssPath), (int) @filemtime($jsPath), (int) @filemtime(__FILE__));
+        $assetQuery = $assetVersion !== '0' ? '?v=' . rawurlencode($assetVersion) : '';
+        $cssUrl = $assetBase . '/gacetaflipbook.css' . $assetQuery;
+        $jsUrl = $assetBase . '/gacetaflipbook.js' . $assetQuery;
 
         return '<link rel="stylesheet" href="' . htmlspecialchars($cssUrl, ENT_QUOTES, 'UTF-8') . '">' . "\n"
             . '<script defer src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>' . "\n"
