@@ -25,7 +25,7 @@ Con esto, el shortcode minimo funciona sin poner ruta del PDF:
 ```
 
 Comportamiento visual actual del visor nativo:
-- La numeracion visible pertenece al visor OpenLeaf y se muestra fuera del PDF.
+- La numeracion visible se muestra como `Numeracion del PDF` y se renderiza fuera del PDF.
 - El boton inferior descarga el PDF original en su resolucion completa.
 
 ## 3) Administrar varios PDFs desde configuracion del plugin

@@ -275,7 +275,7 @@
     var nextBtn = createEl('button', 'gacetaflip-btn', 'Siguiente');
     var counter = createEl('span', 'gacetaflip-counter', '0 / 0');
     var viewerMeta = createEl('div', 'gacetaflip-viewer-meta');
-    var viewerMetaLabel = createEl('span', 'gacetaflip-viewer-meta-label', 'Numeracion del visor OpenLeaf');
+    var viewerMetaLabel = createEl('span', 'gacetaflip-viewer-meta-label', 'Numeracion del PDF');
     var viewerMetaValue = createEl('span', 'gacetaflip-viewer-meta-value', '0 / 0');
 
     var gotoLabel = createEl('label', 'gacetaflip-pagejump');

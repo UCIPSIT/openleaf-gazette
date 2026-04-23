@@ -113,10 +113,30 @@
 .gacetaflip-btn-link {
   border-color: #334155;
   background: #334155;
+  color: #ffffff !important;
+  text-decoration: none !important;
 }
 
 .gacetaflip-btn-download {
   min-width: 220px;
+  border-color: #0f3d75;
+  background: #0f3d75;
+  color: #ffffff !important;
+  font-weight: 700;
+  box-shadow: 0 8px 18px rgba(15, 61, 117, 0.22);
+  text-decoration: none !important;
+}
+
+.gacetaflip-btn-download:hover,
+.gacetaflip-btn-download:focus {
+  border-color: #0b2f5c;
+  background: #0b2f5c;
+  color: #ffffff !important;
+}
+
+.gacetaflip-btn-download:visited,
+.gacetaflip-btn-download:active {
+  color: #ffffff !important;
 }
 
 .gacetaflip-counter,
